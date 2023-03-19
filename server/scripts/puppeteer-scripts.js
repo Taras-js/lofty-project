@@ -10,6 +10,9 @@ async function start_puppeteer () {
         width: 1200,
         height: 800
     })
+    // ".MMImage-Origin"
+    await page.waitForSelector('.MMImage-Origin');
+    await page.screenshot({path: "screenshots/one.png"})
 }
 module.exports = {
     start_puppeteer
