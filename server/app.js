@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const config = require("config");
-const {start_puppeteer} = require("./scripts/puppeteer-scripts")
+const {start_puppeteer} = require("./puppeteer")
 const app = express();
 const PORT = config.get("port") || 8000;
 app.use(cors());
