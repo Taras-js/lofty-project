@@ -10,10 +10,12 @@
   "author": "Taras <shev-taras@ya.ru>",
   "license": "ISC",
   "dependencies": {
+    "amqplib": "^0.10.3",
     "config": "^3.3.9",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "express": "^4.18.2",
+    "pg": "^8.10.0",
     "puppeteer": "^19.7.5"
   },
   "devDependencies": {

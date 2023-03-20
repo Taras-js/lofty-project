@@ -1,9 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const config = require("config");
-const {start_puppeteer} = require("./puppeteer")
+const {url_addresses} = require("./queue/url_addresses")
 const app = express();
 const PORT = config.get("port") || 8000;
+const routes = require("./settings/routes");
+routes(app);
 app.use(cors());
 app.use(express.json());
 
@@ -11,8 +13,8 @@ app.use(express.json());
     try {
         app.listen(PORT, async () => {
             try {
+                await url_addresses()
                 console.log(`App is started on port ${PORT}...`)
-                await start_puppeteer()
             } catch (error) {
                 console.log(`error:`, error);
             }
