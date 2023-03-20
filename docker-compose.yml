@@ -1,0 +1,42 @@
+version: '2'
+
+services:
+
+  rabbitmq:
+    image: rabbitmq:3.10.7-management
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: kcMZ3gU0lIRZlZCzXNfT
+      RABBITMQ_DEFAULT_PASS: TsyGgjHtfq1sTvzkEyfu
+    ports:
+    - "15678:15672"
+
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: lofty
+      POSTGRES_PASSWORD: lofty
+      POSTGRES_DATABASE: lofty
+    ports:
+      - "54321:5432"
+
+  server:
+    build:
+      context: ./server
+    environment:
+      URL_RMQ: amqp://kcMZ3gU0lIRZlZCzXNfT:TsyGgjHtfq1sTvzkEyfu@rabbitmq:5672
+      POSTGRES_USER: lofty
+      POSTGRES_PASSWORD: lofty
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DATABASE: lofty
+    depends_on:
+    - postgres
+    - rabbitmq
+    ports:
+    - "32551:8080"
+
+
+
+
