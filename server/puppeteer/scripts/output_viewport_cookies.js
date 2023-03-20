@@ -13,9 +13,10 @@ async function output_viewport_cookies(newUrl) {
         if (unique.rowCount > 0) {
             console.log(`Данный url(${newUrl}) уже использовался сегодня!`)
         } else {
+            console.log('Opening the browser...');
 
             const browser = await puppeteer.launch({
-                headless: false,
+                headless: true,
                 executablePath: '/usr/bin/chromium-browser',
                 args: [
                     '--no-sandbox',
@@ -23,7 +24,7 @@ async function output_viewport_cookies(newUrl) {
                 ]
             });
             const page = await browser.newPage();
-            await page.goto(newUrl);
+            await page.goto(newUrl, { waitUntil: 'load' });
             let id
             const created = moment().format()
             const viewport = await page.viewport()
@@ -84,6 +85,7 @@ async function output_viewport_cookies(newUrl) {
                     })
                 }
             }
+            await page.close();
             await browser.close()
         }
     } else {
