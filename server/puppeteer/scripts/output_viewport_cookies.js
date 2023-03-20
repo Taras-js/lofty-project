@@ -15,7 +15,7 @@ async function output_viewport_cookies(newUrl) {
         } else {
 
             const browser = await puppeteer.launch({
-                headless: true,
+                headless: false,
                 executablePath: '/usr/bin/chromium-browser',
                 args: [
                     '--no-sandbox',
