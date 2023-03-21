@@ -14,7 +14,10 @@ app.use(express.json());
     try {
         app.listen(PORT, async () => {
             try {
-                await url_addresses()
+                setTimeout(async () => {
+                    await url_addresses()
+                },10000)
+
                 console.log(`App is started on port ${PORT}...`)
             } catch (error) {
                 console.log(`error:`, error);

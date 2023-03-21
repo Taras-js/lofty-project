@@ -8,6 +8,10 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: kcMZ3gU0lIRZlZCzXNfT
       RABBITMQ_DEFAULT_PASS: TsyGgjHtfq1sTvzkEyfu
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
     ports:
     - "15678:15672"
 
@@ -18,12 +22,17 @@ services:
       POSTGRES_USER: lofty
       POSTGRES_PASSWORD: lofty
       POSTGRES_DATABASE: lofty
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
     ports:
       - "54321:5432"
 
   server:
     build:
       context: ./server
+    restart: always
     environment:
       URL_RMQ: amqp://kcMZ3gU0lIRZlZCzXNfT:TsyGgjHtfq1sTvzkEyfu@rabbitmq:5672
       POSTGRES_USER: lofty
@@ -34,6 +43,10 @@ services:
     depends_on:
     - postgres
     - rabbitmq
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
     ports:
     - "32551:8080"
 

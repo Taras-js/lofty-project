@@ -3,7 +3,7 @@ const {start_puppeteer} = require("../puppeteer/index")
 
 async function url_addresses() {
     const queue = 'url_queue';
-    const conn = await amqplib.connect(process.env.URL_RMQ);
+    let conn = await amqplib.connect(process.env.URL_RMQ);
     const ch1 = await conn.createChannel();
     await ch1.assertQueue(queue, {durable: false});
     await ch1.consume(queue, (msg) => {

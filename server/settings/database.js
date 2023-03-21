@@ -18,11 +18,11 @@ const client = new Client({
 const createDatabase = async () => {
     try {
         await client.connect();
-        await client.query(`CREATE DATABASE lofty2`);
+        await client.query(`CREATE DATABASE lofty`);
         return true;
     } catch (error) {
         // console.error(error.stack);
-        console.log('Database not created');
+        // console.log('Database not created');
         return false;
 
     } finally {
@@ -32,11 +32,11 @@ const createDatabase = async () => {
 
 createDatabase().then((result) => {
     if (result) {
-        console.log('Database created');
+        console.log('Database lofty created...');
     }
 })
-const createTableUrl = "create TABLE update(id SERIAL PRIMARY KEY,url_address TEXT, width INTEGER, height INTEGER, created TIMESTAMP)"
-const createTableCookies = "create TABLE cookies_update(\n" +
+const createTableUrl = "create TABLE lofty_urls(id SERIAL PRIMARY KEY,url_address TEXT, width INTEGER, height INTEGER, created TIMESTAMP)"
+const createTableCookies = "create TABLE lofty_urls_cookies(\n" +
     "    id SERIAL PRIMARY KEY,\n" +
     "    name_cookies VARCHAR(255),\n" +
     "    value_cookies TEXT,\n" +
@@ -58,19 +58,19 @@ const createTableCookies = "create TABLE cookies_update(\n" +
 pool.query(createTableUrl, (err, res) => {
 
     if(err){
-        console.log('Table not created');
+        // console.log('Table not created');
         return err
     } else {
-        console.log(res)
+        console.log(`Table lofty_urls created...`)
     }
     // pool.end()
 })
 pool.query(createTableCookies, (err, res) => {
     if(err){
-        console.log('Table not created');
+        console.log('Table lofty_urls_cookies created...');
         return err
     } else {
-        console.log(res)
+        // console.log(res)
     }
     // pool.end()
 })

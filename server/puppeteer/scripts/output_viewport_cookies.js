@@ -6,10 +6,10 @@ async function output_viewport_cookies(newUrl) {
 
     if (newUrl.includes("https://")) {
         const yesterday = moment().subtract(1, "day")
-        const findOne = "SELECT url_address, created FROM update " +
+        const findOne = "SELECT lofty_urls, created FROM update " +
             "WHERE url_address = $1 AND DATE(created) > $2"
         const unique = await pool.query(findOne, [newUrl, yesterday])
-        console.log("unique:", unique)
+        // console.log("unique:", unique)
         if (unique.rowCount > 0) {
             console.log(`Данный url(${newUrl}) уже использовался сегодня!`)
         } else {
@@ -31,7 +31,7 @@ async function output_viewport_cookies(newUrl) {
             if (viewport) {
                 console.log("width:", viewport.width)
                 console.log("height:", viewport.height)
-                const insertData = "INSERT INTO update (" +
+                const insertData = "INSERT INTO lofty_urls (" +
                     "url_address, " +
                     "width, height, " +
                     "created) values($1, $2, $3, $4) RETURNING *"
@@ -41,15 +41,15 @@ async function output_viewport_cookies(newUrl) {
                     viewport.height,
                     created
                 ])
-                console.log('insertData:', url.rows[0])
+                // console.log('insertData:', url.rows[0])
                 id = url.rows[0].id
             }
             const cookies = await page.cookies()
             if (cookies) {
-                console.log("cookies:", cookies.length)
+                console.log("cookies:", cookies)
                 if (cookies.length) {
                     cookies.map(async i => {
-                        const insertData = "INSERT INTO cookies_update (" +
+                        const insertData = "INSERT INTO lofty_urls_cookies (" +
                             "name_cookies, " +
                             "value_cookies, " +
                             "domain, " +
