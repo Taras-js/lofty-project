@@ -35,8 +35,8 @@ createDatabase().then((result) => {
         console.log('Database lofty created...');
     }
 })
-const createTableUrl = "create TABLE lofty_urls(id SERIAL PRIMARY KEY,url_address TEXT, width INTEGER, height INTEGER, created TIMESTAMP)"
-const createTableCookies = "create TABLE lofty_urls_cookies(\n" +
+const createTableUrl = "create TABLE lofty_urls(id SERIAL PRIMARY KEY, url_address TEXT, width INTEGER, height INTEGER, created TIMESTAMP)"
+const createTableCookies = "create TABLE lofty_cookies(\n" +
     "    id SERIAL PRIMARY KEY,\n" +
     "    name_cookies VARCHAR(255),\n" +
     "    value_cookies TEXT,\n" +
@@ -52,28 +52,28 @@ const createTableCookies = "create TABLE lofty_urls_cookies(\n" +
     "    source_scheme VARCHAR(20),\n" +
     "    source_port INTEGER,\n" +
     "    url_id INTEGER,\n" +
-    "    FOREIGN KEY (url_id) REFERENCES update (id)\n" +
+    "    FOREIGN KEY (url_id) REFERENCES lofty_urls (id)\n" +
     ")"
+setTimeout(() => {
+    pool.query(createTableUrl, (err, res) => {
 
-pool.query(createTableUrl, (err, res) => {
+        if(err){
+            return err
+        } else {
+            console.log(`Table lofty_urls created...`)
+        }
+    })
+}, 1000)
+setTimeout(() => {
+    pool.query(createTableCookies, (err, res) => {
+        if(err){
+            return err
+        } else {
+            console.log('Table lofty_cookies created...');
+        }
+    })
+}, 3000)
 
-    if(err){
-        // console.log('Table not created');
-        return err
-    } else {
-        console.log(`Table lofty_urls created...`)
-    }
-    // pool.end()
-})
-pool.query(createTableCookies, (err, res) => {
-    if(err){
-        console.log('Table lofty_urls_cookies created...');
-        return err
-    } else {
-        // console.log(res)
-    }
-    // pool.end()
-})
 
 module.exports = {pool: pool}
 
